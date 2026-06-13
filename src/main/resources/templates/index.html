@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/base :: layout(~{::main})}">
+<main th:fragment="main" class="min-w-0 max-w-2xl space-y-6 lg:max-w-none">
+    <header class="flex flex-col gap-1 border-b border-neutral-800 pb-6 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+            <p class="text-xs font-semibold uppercase tracking-widest text-zinc-500">News feed</p>
+            <h1 class="text-2xl font-bold text-white">Home</h1>
+            <p class="mt-1 text-sm text-zinc-500">LIFO timeline from your connections</p>
+        </div>
+        <span class="inline-flex w-fit items-center rounded-full border border-neutral-800 bg-neutral-900 px-3 py-1 text-xs text-zinc-400"
+              th:text="${posts.size()} + ' posts'">0</span>
+    </header>
+    <div th:replace="~{fragments/post-form :: composer}"></div>
+    <div th:replace="~{fragments/feed-timeline :: timeline}"></div>
+</main>
+</html>

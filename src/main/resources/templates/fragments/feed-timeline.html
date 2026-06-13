@@ -1,0 +1,13 @@
+<section xmlns:th="http://www.thymeleaf.org" th:fragment="timeline" class="space-y-4">
+    <div th:if="${#lists.isEmpty(posts)}" id="feed-empty"
+         class="rounded-xl border border-dashed border-neutral-800 bg-zinc-950 px-8 py-16 text-center">
+        <h3 class="text-lg font-semibold text-white">Your feed is empty</h3>
+        <p class="mt-2 text-sm text-zinc-500">Create a post or connect with others to see updates here (newest first).</p>
+    </div>
+
+    <div id="feed-timeline" class="space-y-4">
+        <th:block th:each="post : ${posts}">
+            <article th:replace="~{fragments/feed-post :: card}"></article>
+        </th:block>
+    </div>
+</section>

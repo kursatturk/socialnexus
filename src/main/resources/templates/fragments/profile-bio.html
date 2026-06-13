@@ -1,0 +1,52 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="section" id="profile-bio-section">
+    <div th:replace="~{fragments/profile-bio :: display}"></div>
+</div>
+
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="display">
+    <div th:if="${isOwnProfile}" class="mb-4 flex items-center justify-between gap-3">
+        <h2 class="text-xs font-semibold uppercase tracking-wider text-zinc-500">About</h2>
+        <button type="button"
+                class="rounded-lg border border-neutral-700 px-3 py-1.5 text-xs font-medium text-zinc-300 transition hover:border-neutral-500 hover:bg-neutral-800 hover:text-white"
+                onclick="document.getElementById('profile-edit-form').classList.toggle('hidden');">
+            Edit Profile
+        </button>
+    </div>
+
+    <div id="profile-bio-display">
+        <div th:unless="${isOwnProfile}">
+            <h2 class="text-xs font-semibold uppercase tracking-wider text-zinc-500">Bio</h2>
+        </div>
+        <p class="mt-2 text-sm text-zinc-300" th:text="${#strings.isEmpty(profileUser.bio())} ? 'No bio yet.' : ${profileUser.bio()}">Bio</p>
+        <div class="mt-4">
+            <h3 class="text-xs font-semibold uppercase tracking-wider text-zinc-500">Skills</h3>
+            <div class="mt-2 flex flex-wrap gap-2">
+                <span th:each="skill : ${profileUser.skills()}"
+                      class="rounded-md border border-neutral-800 bg-black px-3 py-1 text-xs text-zinc-300"
+                      th:text="${skill}">Skill</span>
+                <span th:if="${#lists.isEmpty(profileUser.skills())}" class="text-sm text-zinc-500">None</span>
+            </div>
+        </div>
+    </div>
+
+    <form th:if="${isOwnProfile}" id="profile-edit-form" class="hidden mt-4 space-y-4"
+          hx-post="/user/profile"
+          hx-target="#profile-bio-section"
+          hx-swap="innerHTML">
+        <div>
+            <label class="text-xs font-semibold uppercase tracking-wider text-zinc-500">Bio</label>
+            <textarea name="bio" rows="3" th:text="${profileUser.bio()}"
+                      class="mt-2 w-full resize-none rounded-lg border border-neutral-800 bg-black px-4 py-3 text-sm text-white placeholder-zinc-600 focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"></textarea>
+        </div>
+        <div>
+            <label class="text-xs font-semibold uppercase tracking-wider text-zinc-500">Skills</label>
+            <p class="mt-1 text-xs text-zinc-600">Comma-separated</p>
+            <input type="text" name="skills" th:value="${skillsCsv}"
+                   placeholder="Java, Spring, Kafka"
+                   class="mt-2 w-full rounded-lg border border-neutral-800 bg-black px-4 py-2.5 text-sm text-white placeholder-zinc-600 focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"/>
+        </div>
+        <button type="submit"
+                class="rounded-lg border border-neutral-600 bg-white px-4 py-2 text-xs font-semibold text-black transition hover:bg-zinc-200">
+            Save
+        </button>
+    </form>
+</div>

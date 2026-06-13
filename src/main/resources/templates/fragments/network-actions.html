@@ -1,0 +1,23 @@
+<th:block xmlns:th="http://www.thymeleaf.org" th:fragment="connectionAction">
+    <div th:replace="~{fragments/connect-control :: slot(card=${card}, refresh='grid', query=null)}"></div>
+</th:block>
+
+<th:block th:fragment="connectResponse">
+    <div th:replace="~{fragments/connect-control :: slot(card=${card}, refresh='grid', query=null)}"></div>
+    <div id="suggestions-inner" hx-swap-oob="innerHTML">
+        <div th:replace="~{fragments/suggestions :: panel-inner}"></div>
+    </div>
+    <div id="sidebar-profile" hx-swap-oob="innerHTML">
+        <div th:replace="~{fragments/sidebar-profile :: mini}"></div>
+    </div>
+</th:block>
+
+<th:block th:fragment="disconnectResponse">
+    <div th:replace="~{fragments/connect-control :: slot(card=${card}, refresh='grid', query=null)}"></div>
+    <div id="suggestions-inner" hx-swap-oob="innerHTML">
+        <div th:replace="~{fragments/suggestions :: panel-inner}"></div>
+    </div>
+    <div id="sidebar-profile" hx-swap-oob="innerHTML">
+        <div th:replace="~{fragments/sidebar-profile :: mini}"></div>
+    </div>
+</th:block>

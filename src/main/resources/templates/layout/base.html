@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" class="dark" xmlns:th="http://www.thymeleaf.org" th:fragment="layout(content)">
+<head th:replace="~{layout/head :: head}"></head>
+<body class="min-h-screen bg-black text-zinc-100 antialiased">
+<div id="app-shell" th:fragment="app-shell" class="min-h-screen bg-black">
+    <div class="mx-auto flex min-h-screen max-w-[1600px] gap-0 px-4 py-6 lg:gap-6 lg:px-8">
+        <aside th:replace="~{fragments/sidebar :: sidebar}"></aside>
+        <main id="main-content" class="min-w-0 flex-1 pb-20 lg:pb-0" th:insert="${content}"></main>
+        <aside th:replace="~{fragments/suggestions :: panel}"></aside>
+    </div>
+    <nav th:replace="~{fragments/mobile-nav :: mobile}"></nav>
+</div>
+</body>
+</html>

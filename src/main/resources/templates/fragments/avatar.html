@@ -1,0 +1,9 @@
+<th:block xmlns:th="http://www.thymeleaf.org" th:fragment="circle(initials, size, pictureUrl)">
+    <img th:if="${pictureUrl != null and !#strings.isEmpty(pictureUrl)}"
+         th:src="${pictureUrl}"
+         th:alt="${initials}"
+         th:class="${size == 'lg'} ? 'h-14 w-14 shrink-0 rounded-full border border-neutral-700 object-cover' : (${size == 'sm'} ? 'h-8 w-8 shrink-0 rounded-full border border-neutral-700 object-cover' : (${size == 'md'} ? 'h-10 w-10 shrink-0 rounded-full border border-neutral-700 object-cover' : 'h-12 w-12 shrink-0 rounded-full border border-neutral-700 object-cover'))"/>
+    <div th:unless="${pictureUrl != null and !#strings.isEmpty(pictureUrl)}"
+         th:class="${size == 'lg'} ? 'flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-neutral-700 bg-neutral-800 text-lg font-bold text-white' : (${size == 'sm'} ? 'flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-neutral-700 bg-neutral-800 text-xs font-bold text-white' : (${size == 'md'} ? 'flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-neutral-700 bg-neutral-800 text-sm font-bold text-white' : 'flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-neutral-700 bg-neutral-800 text-sm font-bold text-white'))"
+         th:text="${initials}">SN</div>
+</th:block>

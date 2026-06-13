@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/base :: layout(~{::main})}">
+<main th:fragment="main" class="min-w-0 max-w-2xl space-y-6 lg:max-w-none">
+    <header class="border-b border-neutral-800 pb-6">
+        <p class="text-xs font-semibold uppercase tracking-widest text-zinc-500">Discover</p>
+        <h1 class="text-2xl font-bold text-white">Search</h1>
+        <p class="mt-1 text-sm text-zinc-500">Live lookup across all registered profiles.</p>
+    </header>
+
+    <div class="rounded-xl border border-neutral-800 bg-neutral-900 p-5">
+        <label for="search-input" class="mb-2 block text-xs font-medium uppercase tracking-wider text-zinc-500">Username or name</label>
+        <input id="search-input" name="q" type="search" autocomplete="off"
+               placeholder="e.g. kursat, alice, engineer..."
+               class="w-full rounded-lg border border-neutral-800 bg-black px-4 py-3 text-sm text-white placeholder-zinc-600 focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
+               hx-get="/search/results"
+               hx-trigger="keyup changed delay:300ms, search"
+               hx-target="#search-results"
+               hx-swap="innerHTML"
+               hx-include="#search-input"
+               hx-indicator="#search-spinner"/>
+        <div id="search-spinner" class="htmx-indicator mt-2 text-xs text-zinc-500">Searching…</div>
+    </div>
+
+    <div th:replace="~{fragments/search-results :: results}"></div>
+</main>
+</html>

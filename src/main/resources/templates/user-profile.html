@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/base :: layout(~{::main})}">
+<main th:fragment="main" class="min-w-0 max-w-3xl space-y-6">
+    <header class="border-b border-neutral-800 pb-6">
+        <p class="text-xs font-semibold uppercase tracking-widest text-zinc-500">Profile</p>
+        <h1 class="text-2xl font-bold text-white" th:text="${profileUser.name()}">Name</h1>
+        <p class="mt-1 text-sm text-zinc-500" th:text="'@' + ${profileUser.username()}">@user</p>
+    </header>
+
+    <section class="rounded-xl border border-neutral-800 bg-neutral-900 p-6">
+        <div class="flex flex-col gap-6 sm:flex-row sm:items-start">
+            <th:block th:with="init=${#strings.toUpperCase(#strings.substring(profileUser.name(),0,1))}">
+                <div th:replace="~{fragments/avatar :: circle(${init}, 'lg', ${profileUser.profilePictureUrl()})}"></div>
+            </th:block>
+            <div class="flex-1 space-y-4">
+                <div th:replace="~{fragments/profile-bio :: section}"></div>
+
+                <div th:if="${!isOwnProfile}" id="profile-connection-slot" class="pt-1">
+                    <div th:replace="~{fragments/profile-connection :: control}"></div>
+                </div>
+
+                <div th:if="${isOwnProfile}" id="profile-avatar-settings">
+                    <div th:replace="~{fragments/profile-avatar-settings :: settings}"></div>
+                </div>
+
+                <div class="flex gap-4 pt-2">
+                    <div class="rounded-lg border border-neutral-800 bg-black px-4 py-3">
+                        <p class="text-2xl font-bold text-white" th:text="${profileConnectionCount}">0</p>
+                        <p class="text-xs text-zinc-500">Connections</p>
+                    </div>
+                    <div class="rounded-lg border border-neutral-800 bg-black px-4 py-3">
+                        <p class="text-2xl font-bold text-white" th:text="${ownPosts.size()}">0</p>
+                        <p class="text-xs text-zinc-500">Posts</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2 class="mb-4 text-lg font-semibold text-white">Timeline</h2>
+        <p class="mb-4 text-sm text-zinc-500">Posts authored by <span class="text-zinc-300" th:text="'@' + ${profileUser.username()}">@user</span> only.</p>
+        <div th:if="${#lists.isEmpty(ownPosts)}"
+             class="rounded-xl border border-dashed border-neutral-800 bg-zinc-950 px-8 py-12 text-center">
+            <p class="text-sm text-zinc-500">No posts yet.</p>
+        </div>
+        <div class="space-y-4" th:unless="${#lists.isEmpty(ownPosts)}">
+            <th:block th:each="post : ${ownPosts}">
+                <article th:replace="~{fragments/feed-post :: card}"></article>
+            </th:block>
+        </div>
+    </section>
+</main>
+</html>
